@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUICKRIDE</title>
+    <link rel="icon" type="image/jpg" href="4.jpg">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Baloo+Thambi');
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5; 
+            display: flex;
+            background: url('images/po.jpg') no-repeat center center;
+            background-size: cover;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            border-image: fill 0 linear-gradient(black, rgba(255, 255, 255, 0));
+
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-family: 'Baloo Thambi', cursive;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            transition: transform 0.3s;
+            border-radius: 100%;
+            border: 3.5px solid blue;
+        }
+
+        .logo img:hover {
+            transform: rotate(360deg);
+        }
+
+        .header1 {
+            display: flex;
+            gap: 5px; 
+            font-size: 35px; 
+            font-weight: bold;
+            color: white;
+            margin-right: 1400px; 
+        }
+
+        .header1 > span {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                color: #fff;
+                text-shadow: 0 0 12px blue, 0 30px 50px blue, 0 0 190px blue;
+            }
+            10%, 90% {
+                color: #fff;
+                text-shadow: none;
+            }
+        }
+
+        .header1 > span:nth-child(1) { animation-delay: 0.25s; }
+        .header1 > span:nth-child(2) { animation-delay: 0.5s; }
+        .header1 > span:nth-child(3) { animation-delay: 0.75s; }
+        .header1 > span:nth-child(4) { animation-delay: 1s; }
+        .header1 > span:nth-child(5) { animation-delay: 1.25s; }
+
+        .container {
+            background-color:rgba(0, 0, 0, 0.382);
+            border-radius: 15px; 
+            box-shadow: 0 4px 8px rgb(238, 172, 238); 
+            padding: 40px;
+            width: 450px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-size: 1000px;
+            color: white;
+            transform: translateY(68px); 
+            margin-left: 280px;
+            
+        }
+
+        .container:hover {
+            transform: translateY(60px);
+            box-shadow: 0 10px 20px white;
+        }
+
+        .form-wrapper {
+            text-align: center;
+            background: transparent;
+        }
+
+        h2 {
+            color: white;
+            margin-bottom: 30px;
+            font-size: 24px; 
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+            font-weight: bold; 
+        }
+
+        input[type="text"],
+        input[type="text"],
+        input[type="password"],
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 3px solid blue; 
+            border-radius: 50px; 
+            box-sizing: border-box;
+            font-size: 16px; 
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="file"]:focus {
+            border-color: white;
+            outline: none;
+        }
+
+        button[type="submit"] {
+            background-color: black; 
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 15px; 
+            margin-top: 15px; 
+        }
+
+        a {
+            color: #0084ff; 
+            text-decoration: none;
+            font-weight: bold; 
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body> 
+    <div class="header">
+        <div class="logo">
+            <img src="4.jpg" alt="Logo">
+        </div>
+        <div class="header1">
+            <span>Q</span>
+            <span>U</span>
+            <span>I</span>
+            <span>C</span>
+            <span>K</span>
+            <span>R</span>
+            <span>I</span>
+            <span>D</span>
+            <span>E</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-wrapper">
+            <h2>Créer un compte</h2>
+            <form action="/submit_client" method="post" enctype="multipart/form-data">
+                <label for="username">Nom utilisateur <i class='bx bx-user'></i> :</label>
+                <input type="text" id="username" name="username" placeholder="Entrer votre nom d'utilisateur" required>
+                <label for="password">Password <i class='bx bxs-lock-alt'></i> :</label>
+                <input type="password" id="password" name="password" placeholder="Entrer votre mot de passe" required>
+                <label for="phone">Numero de telephone <i class='bx bxs-phone'></i> :</label>
+                <input type="text" id="phone" name="phone" placeholder="Entrer votre num de telephone" required>
+                <label for="photo">Photo de Profile <i class='bx bxs-photo-album'></i> :</label>
+                <input type="file" id="photo" name="photo" accept="image/*">
+                <button type="submit">Créer un compte</button>
+            </form>
+        </div>
+        <p>Vous avez déjà un compte ? <a href="client_login.html">Connectez-vous</a></p>
+    </div>
+</body>
+</html>

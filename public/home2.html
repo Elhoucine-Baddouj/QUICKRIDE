@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUICKRIDE</title>
+    <link rel="icon" type="image/jpg" href="4.jpg">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+     crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background-color: #f0f2f5;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #map {
+            height: 100vh;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        header {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            z-index: 1000;
+            box-shadow: 0 0 10px #000;
+            background: rgba(0, 0, 0, 0.671);
+            padding: 0 20px;
+        }
+
+        #chk1 {
+            display: none;
+        }
+
+        i {
+            color: #fff;
+            cursor: pointer;
+        }
+
+        header .logo {
+            flex: 1;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        header .search-box {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            height: 40px;
+            border: none;
+            outline: none;
+            background: #f2f2f2;
+            border-radius: 30px;
+            color: gray;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .search-box button {
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 30px;
+            border: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform: scale(0.9);
+            background: blue;
+        }
+
+        header ul {
+            flex: 2;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        header ul li {
+            list-style: none;
+        }
+
+        header ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 10px 15px;
+        }
+
+        header ul li a:hover {
+            border-bottom: 2px solid blue;
+        }
+
+        header .menu {
+            font-size: 2.5em;
+            display: none;
+        }
+
+        #route-info {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+        }
+
+        #notifications {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1001;
+            background: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .notification {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            max-width: 280px; 
+            word-wrap: break-word; 
+        }
+
+        .notification-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .notification img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .notification-content {
+            flex-grow: 1;
+        }
+
+        .notification strong {
+            margin: 0;
+        }
+
+        .notification button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: green;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .notification button:hover {
+            background-color: darkgreen;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <input type="checkbox" name="" id="chk1"> 
+        <div class="logo"><h1>QUICKRIDE</h1></div>
+        <div class="search-box">
+            <form id="search-form">
+                <input type="text" name="search" id="srch" placeholder="Search">                
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <ul>
+            <li><a href="#" id="reserve-link1"> <i class="fa-duotone fa-solid fa-suitcase-medical"></i> &nbsp; HELP</a></li>
+            <li><a href="ren.html" id="reserve-link13"> <i class="fa-solid fa-plug-circle-xmark"></i> &nbsp;DISCONNECT</a></li>  
+            <li>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </li>                          
+        </ul> 
+        <div class="menu">
+            <label for="chk1">
+                <i class="fa fa-bars"></i>
+            </label>
+        </div>        
+    </header>
+    <div id="map"></div>
+    <div id="route-info" style="display: none;">Distance: <span id="route-distance"></span></div>
+    <div id="notifications"></div>
+
+    <script>
+        var map, userMarker, destinationMarker, routeLine;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude;
+                    var lon = position.coords.longitude;
+
+                    initializeMap(lat, lon);
+                }, function(error) {
+                    alert('Erreur ' + error.message);
+                    initializeMap(51.505, -0.09);  
+                });
+            } else {
+                alert(' sir ghyerha !!!');
+                initializeMap(51.505, -0.09);  
+            }
+        });
+
+        function initializeMap(lat, lon) {
+            map = L.map('map', { zoomControl: false }).setView([lat, lon], 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            userMarker = L.marker([lat, lon]).addTo(map)
+                .bindPopup('Vous êtes ici.')
+                .openPopup();
+
+            L.control.zoom({
+                position: 'bottomright'
+            }).addTo(map);
+        }
+
+        let socket = io(); 
+
+        socket.on('new_reservation', function(data) {
+            let notification = document.createElement('div');
+            notification.classList.add('notification');
+
+            let photoSrc = data.photo ? data.photo : 'path/to/default/image.jpg';
+
+            console.log('Notification data:', data); 
+
+            notification.innerHTML = `
+                <div class="notification-header">
+                    <img src="${photoSrc}" alt="Client photo">
+                    <strong>${data.username}</strong>
+                </div>
+                <div class="notification-content">
+                    Date: ${data.date}<br>
+                    Destination: ${data.destination}<br>
+                    <button onclick="acceptReservation('${data.lat}', '${data.lon}', '${data.clientId}')">Accepter</button>
+                </div>
+            `;
+
+            document.getElementById('notifications').appendChild(notification);
+        });
+
+        function acceptReservation(lat, lon, clientId) {
+            let userLatLng = userMarker.getLatLng();
+            let destinationLatLng = L.latLng(lat, lon);
+
+            if (destinationMarker) {
+                map.removeLayer(destinationMarker);
+            }
+            if (routeLine) {
+                map.removeLayer(routeLine);
+            }
+
+            destinationMarker = L.marker([lat, lon]).addTo(map)
+                .bindPopup('Destination')
+                .openPopup();
+
+            var routingUrl = `https://router.project-osrm.org/route/v1/driving/${userLatLng.lng},${userLatLng.lat};${destinationLatLng.lng},${destinationLatLng.lat}?overview=full&geometries=geojson`;
+            fetch(routingUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.routes && data.routes.length > 0) {
+                        var route = data.routes[0];
+                        var routeCoordinates = route.geometry.coordinates.map(coord => [coord[1], coord[0]]);
+                        routeLine = L.polyline(routeCoordinates, { color: 'blue' }).addTo(map);
+
+                        var distance = route.distance / 1000; 
+                        document.getElementById('route-distance').textContent = distance.toFixed(2) + ' km';
+                        document.getElementById('route-info').style.display = 'block';
+
+                        map.fitBounds(routeLine.getBounds());
+
+                        socket.emit('accept_reservation', {
+                            driverName: "Driver's Name",
+                            destination: data.destination,
+                            lat: lat,
+                            lon: lon,
+                            clientId: clientId 
+                        });
+                    } else {
+                        alert('Route non trouvée.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la récupération de la route:', error);
+                    alert('Erreur lors de la récupération de la route.');
+                });
+
+            event.target.parentElement.remove();
+        }
+
+        document.addEventListener('click', function(event) {
+            if (!document.getElementById('notifications').contains(event.target)) {
+                document.getElementById('notifications').innerHTML = '';
+            }
+        });
+
+    </script>
+</body>
+</html>

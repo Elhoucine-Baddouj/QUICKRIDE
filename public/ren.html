@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUICKRIDE</title>
+    <link rel="icon" type="image/jpg" href="4.jpg">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Baloo+Thambi');
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .header1 {
+            float: left;
+            margin-right: 1250px;
+            display: flex;
+            gap: 5px; 
+            font-size: 35px; 
+            font-weight: bold;
+            color: white; 
+        }
+        .header1 > span {
+            animation: glow 2s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0%, 100% {
+                color: #fff;
+                text-shadow: 0 0 12px blue, 0px 30px 50px blue, 0 0 100px blue;
+            }
+            10%, 90% {
+                color: #fff;
+                text-shadow: none;
+            }
+        }
+        .header1 > span:nth-child(1) { animation-delay: 0.25s; }
+        .header1 > span:nth-child(2) { animation-delay: 0.5s; }
+        .header1 > span:nth-child(3) { animation-delay: 0.75s; }
+        .header1 > span:nth-child(4) { animation-delay: 1s; }
+        .header1 > span:nth-child(5) { animation-delay: 1.25s; }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: url('images/k.jpg') no-repeat center center ;
+            background-size: 1535px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: #111;
+            font-family: 'Baloo Thambi', cursive;
+            font-size: 2.7rem;
+            border-image: fill 0 linear-gradient(black, rgba(255, 255, 255, 0));
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            transition: transform 0.3s;
+            border-radius: 100%;
+            border: 3.5px solid blue;
+        }
+        .logo img:hover {
+            transform: rotate(360deg);
+            border: 3.5px solid blue;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .menu-button i {
+            margin-right: 5px; 
+        }
+        .lang-button, .menu-button {
+            background: none;
+            border: 1px solid white;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .content {
+            text-align: center;
+            font-weight: bold;
+            color: #000;
+            float: right;
+            margin-left: 1150px;
+            transform: translateY(-700px); 
+        }
+        h2 {
+            font-size: 3em;
+        }
+        .highlight {
+            background-color: yellow;
+            color: black;
+            padding: 0 5px;
+        }
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            outline: none;
+            color: black;
+            cursor: pointer;
+            position: relative;
+            z-index: 0;
+            border-radius: 15px;
+            font-weight: 800;
+            border: 3px solid #3aafdc;
+        }
+        .btn::after {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(98, 181, 214, 0.445);
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+        }
+        .btn::before {
+            content: "";
+            background: linear-gradient(
+                45deg,
+                #FF0000, #FF7300, #FFFB00, #48FF00,
+                #00FFD5, #002BFF, #FF00C8, #FF0000
+            );
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            background-size: 600%;
+            z-index: -1;
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            filter: blur(8px); 
+            animation: glowing 20s linear infinite;
+            transition: opacity .3s ease-in-out;
+            border-radius: 10px;
+            opacity: 1;
+        }
+        @keyframes glowing {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+        .btn:hover::before {
+            opacity: 1;
+        }
+        .btn:active:after {
+            background: transparent;
+        }
+        .btn:active {
+            color: #000;
+            font-weight: bold;
+        }
+        .par {
+            content: "";
+            z-index: -1;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(98, 181, 214, 0.445);
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+        }
+        .menu-button {
+            background-color: white; 
+            color: black;
+            padding: 10px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px; 
+        }
+        #language {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px; 
+            border: 1px solid #ccc; 
+        }
+        #prg {
+            width: 35%; 
+            position: absolute;
+            right: 15px;
+            left: 30px;
+            top: 60px;
+            color: white;
+            padding: 20px;
+            font-size: 35px;
+        }
+        #prg .line {
+            display: block;
+        }
+        .hidden {
+            display: none;
+        }
+        #question{
+            width: 35%; 
+            position: absolute;
+            right: 150px;
+            left: 1000px;
+            top: 60px;
+            color: white;
+            padding: 20px;
+            font-size: 35px;
+
+        }
+        .hidden1 {
+            display: none;
+        }
+        #question1{
+            width: 35%; 
+            position: absolute;
+            right: 150px;
+            left: 1000px;
+            top: 60px;
+            color: white;
+            padding: 20px;
+            font-size: 35px;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="4.jpg" alt="Logo">
+            </div>
+            <div class="header1">
+                <span>Q</span>
+                <span>U</span>
+                <span>I</span>
+                <span>C</span>
+                <span>K</span>
+                <span>R</span>
+                <span>I</span>
+                <span>D</span>
+                <span>E</span>
+            </div>
+        </div>
+        <h6 id="prg">
+            <span class="line">Welcome to QuickRide!</span>
+            <span class="line">Enjoy your experience</span>
+        </h6>
+        
+        <div class="content">
+            <button class="btn" id="b1">SIGN IN</button>
+            <button class="btn" id="b2">SIGN UP</button>
+        </div>
+
+        <div id="question" class="hidden">
+            <p>Are you a taxi client or a taxi driver?</p>
+            <button class="btn" id="clientBtn">Taxi Client</button>
+            <button class="btn" id="driverBtn">Taxi Driver</button>
+        </div>
+        <div id="question1" class="hidden1">
+            <p>Are you a taxi client or a taxi driver?</p>
+            <button class="btn" id="clientBtn1">Taxi Client</button>
+            <button class="btn" id="driverBtn1">Taxi Driver</button>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('b1').addEventListener('click', function() {
+            document.getElementById('question').classList.remove('hidden');
+        });
+
+        document.getElementById('clientBtn').addEventListener('click', function() {
+            window.location.href = 'client.html'; 
+        });
+
+        document.getElementById('driverBtn').addEventListener('click', function() {
+            window.location.href = 'driver.html'; 
+        });
+
+    </script>
+    <script>
+         document.getElementById('b2').addEventListener('click', function() {
+            document.getElementById('question1').classList.remove('hidden1');
+        });
+
+        document.getElementById('clientBtn1').addEventListener('click', function() {
+            window.location.href = 'client_login.html'; 
+        });
+
+        document.getElementById('driverBtn1').addEventListener('click', function() {
+            window.location.href = 'driver_login.html'; 
+        });
+    </script>
+    
+</body>
+</html>

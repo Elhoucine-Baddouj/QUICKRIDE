@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guide</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #f1f1f1;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+            margin-left: 500px;
+            margin-top: 5px;
+            margin-bottom: 1.5em;
+            color:blue;
+        }
+        h2 {
+            font-size: 2em;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        p {
+            font-size: 1.2em;
+            line-height: 1.5;
+        }
+        a {
+            color: #1e90ff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .highlight{
+            font-weight: 700;
+            color: blue;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            transition: transform 0.3s;
+            border-radius: 100%;
+            border: 3.5px solid blue;
+        }
+
+        .logo img:hover {
+            transform: rotate(360deg);
+        }
+
+        .header1 {
+            display: flex;
+            gap: 5px; 
+            font-size: 35px; 
+            font-weight: bold;
+            color: white;
+            margin-right: 1400px; 
+        }
+
+        .header1 > span {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                color: #fff;
+                text-shadow: 0 0 12px blue, 0 0 50px blue, 0 0 100px blue;
+            }
+            10%, 90% {
+                color: #fff;
+                text-shadow: none;
+            }
+        }
+
+        .header1 > span:nth-child(1) { animation-delay: 0.25s; }
+        .header1 > span:nth-child(2) { animation-delay: 0.5s; }
+        .header1 > span:nth-child(3) { animation-delay: 0.75s; }
+        .header1 > span:nth-child(4) { animation-delay: 1s; }
+        .header1 > span:nth-child(5) { animation-delay: 1.25s; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="4.jpg" alt="Logo">
+        </div>
+        <div class="header1">
+            <span>Q</span>
+            <span>U</span>
+            <span>I</span>
+            <span>C</span>
+            <span>K</span>
+            <span>R</span>
+            <span>I</span>
+            <span>D</span>
+            <span>E</span>
+        </div>
+    </div>
+    <h1>User Guide</h1>
+
+
+
+    <p>
+        <span class="highlight">QUICKRIDE</span> is a reliable and secure taxi booking application that ensures safe and convenient rides for all users,
+         providing real-time tracking, transparent pricing, and 24/7 customer support.</p>
+    
+    <h2>Chat rooms</h2>
+    <p>Public rooms can be joined by anyone with the room URL. By default, rooms are given a random and unguessable name. You can name your room whatever you'd like, but keep in mind that simpler room names are more guessable by others. For maximum security, consider using the default room name.</p>
+    <p>Private rooms can only be joined by peers with a matching password. The password must be mutually agreed upon before joining. If peers submit mismatching passwords, they will be in the room but be unable to connect to each other. No error will be shown if there is a password mismatch because there is no central arbitrating mechanism by which to detect the mismatch.</p>
+    <p>To connect to others, share the room URL with a secure tool such as <a href="#">Burner Note</a> or <a href="#">Yopass</a>. You will be notified when others join the room.</p>
+
+    <h2>Peer verification</h2>
+    <p>When you connect with a peer, Chitchatter automatically attempts to use <a href="#">public-key cryptography</a> to verify them. You can see everyone's public keys in the peer list. Feel free to share your public key with others (it is not sensitive information) so that they can uniquely identify you.</p>
+    <p>All public and private keys are generated locally. Your private key is never sent to any peer or server.</p>
+
+    <h2>Community rooms</h2>
+    <p>There is a <a href="#">public list of community rooms</a> that you can join to discuss various topics.</p>
+</body>
+</html>
